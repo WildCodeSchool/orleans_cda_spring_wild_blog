@@ -1,6 +1,7 @@
 package org.wildcodeschool.myblog.service;
 
 import org.springframework.stereotype.Service;
+import org.wildcodeschool.myblog.exception.ResourceNotFoundException;
 import org.wildcodeschool.myblog.model.Article;
 import org.wildcodeschool.myblog.repository.ArticleRepository;
 
@@ -22,10 +23,7 @@ public class ArticleService {
     }
 
     public Article getArticleById(Long id) {
-        Article article = articleRepository.findById(id).orElse(null);
-        if (article == null) {
-            return null;
-        }
+        Article article = articleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("L'article avec l'id " + id + " n'a pas été trouvé"));
         return article;
     }
 
